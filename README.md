@@ -1,6 +1,6 @@
 # SOC'25 – GPU-Based Ray Tracer
 
-This is Abhinav V from CSE department 2024-2028 of IIT Bombay. I am going to be a Sophie.
+This is Abhinav V(24B1007) from CSE department 2024-2028 of IIT Bombay. I am going to be a Sophie.
 Welcome! This repository contains the solution of weekly tasks on project GPU-Based Ray Tracer under Summer of Code 2025.
 
 #It is under progress, here is my week 1 task.
