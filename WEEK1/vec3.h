@@ -86,9 +86,14 @@ public:
         float c = (a.cross(i)).length();
 
         float sin = c/refractive_index;
-        float cos = sqrt(1-sin*sin);
-        
-        Vec3 r = a*cos + b*sin;
-        return r;
+        if(sin > 1) {
+            return reflect(normal);
+        }
+        else {
+            float cos = sqrt(1-sin*sin);
+            
+            Vec3 r = a*cos + b*sin;
+            return r;
+        }
     }
 };
