@@ -6,7 +6,10 @@ class hit_record {
         point3 p;
         Vec3 normal;
         double t;
+        bool front_face;
 
+        // // This function is for outward normal uncomment this if you prefer it.
+        
         // void set_face_normal(const ray& r, const Vec3& outward_normal) {
         //     if(outward_normal.dot(r.direction())<0) normal = -outward_normal;
         // }

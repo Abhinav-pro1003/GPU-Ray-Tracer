@@ -10,12 +10,15 @@ class hittable_list : public hittable {
 
         hittable_list() {}
         hittable_list(shared_ptr<hittable> a) {add(a);}
+
         void add(shared_ptr<hittable> a) {
             objects.push_back(a);
         }
+
         void clear() {
             objects.clear();
         }
+
         bool hit(const ray&r, double ray_tmin, double ray_tmax, hit_record& rec) const override {
             hit_record temp_rec;
             bool hit_anything = false;
@@ -28,7 +31,6 @@ class hittable_list : public hittable {
                     rec = temp_rec;
                 }
             }
-
             return hit_anything;
         }
 
