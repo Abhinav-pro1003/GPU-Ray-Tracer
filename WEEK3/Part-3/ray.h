@@ -4,21 +4,21 @@
 class ray {
     private:
         point3 ori;
-        Vec3 dir;
+        vec3 dir;
     public:
         ray() {}
 
-        ray(const point3& origin, const Vec3& direction) {
+        ray(const point3& origin, const vec3& direction) {
             ori = origin;
             dir = direction;
         }
         const point3& origin() const{
             return ori;
         }
-        const Vec3& direction() const{
+        const vec3& direction() const{
             return dir;
         }
-        point3 at(double t) const {
+        point3 at(real_t t) const {
             return ori + dir*t;
         }
 };

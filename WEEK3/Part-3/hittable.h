@@ -4,8 +4,8 @@
 class hit_record {
     public:
         point3 p;
-        Vec3 normal;
-        double t;
+        vec3 normal;
+        real_t t;
         bool front_face;
 
         // // This function is for outward normal uncomment this if you prefer it.
@@ -19,6 +19,6 @@ class hittable {
     public:
         virtual ~hittable() = default;
         
-        virtual bool hit(const ray& r, double ray_tmin, double ray_tmax, hit_record& rec) const = 0;
+        virtual bool hit(const ray& r, real_t ray_tmin, real_t ray_tmax, hit_record& rec) const = 0;
 };
 #endif

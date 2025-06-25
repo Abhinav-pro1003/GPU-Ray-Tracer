@@ -5,6 +5,7 @@
 #include <memory>
 #include <cmath>
 
+using real_t = float;
 using namespace std;
 using std::make_shared;
 using std::shared_ptr;
@@ -17,9 +18,8 @@ inline double degrees_to_radians(double degrees) {
 }
 
 #include "vec3.h"
-using color = Vec3;
-using point3 = Vec3;
+using color = vec3;
+using point3 = vec3;
 #include "ray.h"
-#include "color.h"
 
 #endif

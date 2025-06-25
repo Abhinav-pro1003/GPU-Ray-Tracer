@@ -19,10 +19,10 @@ class hittable_list : public hittable {
             objects.clear();
         }
 
-        bool hit(const ray&r, double ray_tmin, double ray_tmax, hit_record& rec) const override {
+        bool hit(const ray&r, real_t ray_tmin, real_t ray_tmax, hit_record& rec) const override {
             hit_record temp_rec;
             bool hit_anything = false;
-            double close = ray_tmax;
+            real_t close = ray_tmax;
 
             for(const auto& object : objects) {
                 if (object->hit(r, ray_tmin, close, temp_rec)) {
