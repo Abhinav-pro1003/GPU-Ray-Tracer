@@ -8,4 +8,3 @@ I learnt sycl and many more in this week. This week was tough but worthy!!
 2. Thus I have made my program main.cpp to run on my CPU rather than GPU.
 3. If you want to test my code or run, change Line 17 in main.cpp from
   auto queue = sycl::queue(sycl::cpu_selector_v); to   auto queue = sycl::queue(sycl::gpu_selector_v);
- 
