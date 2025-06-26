@@ -6,6 +6,6 @@ on gpu by sycl. This week was long and interesting to learn more, awaiting foe n
 This folder contains files that run the program without sycl and gpu.
 
 # Part-3
-This folder contains files for compilation on gpu by sycl. The header render_kernel is the new one which 
+This folder contains files for compilation on gpu by sycl. The header render_kernel.h is the new one which 
 contains class render, render_kernel and their related functions. If you are interested to compile the
 program main.cpp read Part-3 README.md before.
