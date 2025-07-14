@@ -6,10 +6,13 @@ class camera {
     vec3 viewport_v;
 
     camera(vec3 look_from, vec3 look_at, vec3 up, float angle, real_t ratio) {
+
         center = look_from;
+
         auto focal_length = (look_from - look_at).length();
         auto theta = degrees_to_radians(angle);
         auto h = std::tan(theta / 2);
+        
         auto viewport_height = 2 * h * focal_length;
         auto viewport_width = viewport_height * ratio;
 

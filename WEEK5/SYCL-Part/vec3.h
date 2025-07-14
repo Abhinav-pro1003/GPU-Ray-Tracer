@@ -1,8 +1,10 @@
 #ifndef VEC3_H
 #define VEC3_H
 
-using real_t = float;
+using real_t = double;
 using namespace std;
+
+#include <random>
 
 class vec3
 {
@@ -76,6 +78,10 @@ public:
         return sqrt( x*x + y*y + z*z);
     }
 
+    real_t length_squared() const {
+        return (x*x + y*y + z*z);
+    }
+
     vec3 unit() const {
         real_t a = this->length();
         return vec3(x/a,y/a,z/a);
@@ -94,30 +100,35 @@ public:
         cout << "(" << x << "," << y << "," << z << ")";
     }
 
-    vec3 reflect(const vec3& normal) const {
-        vec3 a=*this-normal*dot(normal)*2;
-        return a;
+    bool near_zero() const {
+        // Return true if the vector is close to zero in all dimensions.
+        auto s = 1e-8;
+        return (std::fabs(x) < s) && (std::fabs(y) < s) && (std::fabs(z) < s);
     }
     
-    vec3 refract(const vec3& normal, double refractive_index) const {
-        vec3 a = normal.unit();
-        vec3 b = ((a.cross(*this)).cross(a)).unit();
-        vec3 i = unit();
-
-        real_t c = (a.cross(i)).length();
-
-        real_t sin = c/refractive_index;
-        if(sin > 1) {
-            return reflect(normal);
-        }
-        else {
-            real_t cos = sqrt(1-sin*sin);
-            
-            vec3 r = a*cos + b*sin;
-            return r;
-        }
-    }
 };
 
+inline vec3 reflect(const vec3& v, const vec3& n) {
+    return v - n*v.dot(n)*2;
+}
+
+inline vec3 refract(const vec3& uv, const vec3& n, double etai_over_etat) {
+    auto cos_theta = fmin(n.dot(-uv), 1.0);
+    vec3 r_out_perp = (uv + n*cos_theta) * etai_over_etat;
+    vec3 r_out_parallel = n * (-sqrt(fabs(1.0 - r_out_perp.length_squared())));
+    return r_out_perp + r_out_parallel;
+}
+
+template <class rng_t>
+vec3 random_in_unit_sphere(rng_t rng, xorwow_state_t* local_rand_state) {
+    auto randf = [local_rand_state, rng]() {  return rand_uniform(rng, local_rand_state); };
+
+     while (true) {
+            auto p = vec3(randf(), randf(), randf()); // in [-1,1]^3
+            auto l = p.length_squared();
+            if (l <= 1.0f && l>1e-30f) // inside the unit sphere
+                return p / sycl::sqrt(l);
+     }
+}
 
 #endif

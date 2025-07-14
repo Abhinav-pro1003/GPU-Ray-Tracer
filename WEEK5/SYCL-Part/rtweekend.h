@@ -6,7 +6,7 @@
 #include <memory>
 #include <cmath>
 
-using real_t = float;
+using real_t = double;
 using int_type = uint32_t;
 using namespace std;
 using std::make_shared;
@@ -14,8 +14,9 @@ using std::shared_ptr;
 
 constexpr auto width = 400;
 constexpr auto height = 225;
-constexpr auto samples = 10;
+constexpr auto samples = 100;
 constexpr auto max_depth = 50;
+
 
 const double infinity = std::numeric_limits<double>::infinity();
 const double pi = 3.1415926535897932385;
@@ -66,13 +67,32 @@ inline xorwow_state_t get_initial_xorwow_state(int_type seed) {
   return state;
 }
 
-template <class rng_t, class state_t, typename data_t = float>
-inline data_t rand_uniform(rng_t rng, state_t* state) {
-  auto a = rng(state) >> 9;
-  auto res = data_t{0.0};
-  *(reinterpret_cast<int_type*>(&res)) = a | 0x3F800000;
-  return res - data_t{1.0};
+template <class rng_t, class state_t>
+inline double rand_uniform(rng_t rng, state_t* state) {
+  // Generate two 32-bit random parts for 52 bits of precision
+  uint64_t hi = rng(state);      // upper 32 bits
+  uint64_t lo = rng(state);      // lower 32 bits
+  uint64_t mantissa = ((hi & 0x000FFFFF) << 32) | lo; // 52 bits
+
+  uint64_t bits = (uint64_t(0x3FF) << 52) | mantissa; // exponent = 1023 (bias), so value ∈ [1,2)
+  double res;
+  std::memcpy(&res, &bits, sizeof(bits)); // safely reinterpret bits
+  return res - 1.0; // map to [0, 1)
 }
+
+inline double xorand() {
+  uint64_t hi = rand();
+  uint64_t lo = rand();
+  uint64_t mantissa = ((hi & 0x000FFFFF) << 32) | lo;
+  uint64_t bits = (uint64_t(0x3FF) << 52) | mantissa;
+  double res;
+  std::memcpy(&res, &bits, sizeof(bits));
+  return res - 1.0;
+}
+
+
+enum class material_t { Lambertian, Metal, Dielectric };
+
 
 #include "vec3.h"
 using color = vec3;
