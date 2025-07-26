@@ -1,10 +1,11 @@
-# ✅ Week 3: Port the basic sphere renderer to SYCL for GPU acceleration.
+# Final image traced by GPU!!
+Here this folder contains code to get the final image by gpu. The compilation time here was
+less compared to cpu as it is about ~2hrs. This is because I run the SYCL code in cpu, as my pc can't
+support running on gpu orelse it would have been more faster.
 
-Here is my Part-3 of WEEK-3. This folder has files to compile the main.cpp program in gpu by sycl.
-I learnt sycl and many more in this week. This week was tough but worthy!!
+# Final Image
+final_image_1.ppm is the file where I used xorand() function to get the random number between 0 and 1. This image
+is so sharp and clear with no black spots.
 
-# Note:
-1. My pc is Windows,AMD Ryzen-7 hence Intel One API won't work on my GPU.
-2. Thus I have made my program main.cpp to run on my CPU rather than GPU.
-3. If you want to test my code or run, change Line 17 in main.cpp from
-  auto queue = sycl::queue(sycl::cpu_selector_v); to   auto queue = sycl::queue(sycl::gpu_selector_v);
+final_image_2.ppm is the file where I used randf() function to get the random number between 0 and 1. This
+image have black spots dispersed near the shadow. 
